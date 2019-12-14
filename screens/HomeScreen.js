@@ -8,14 +8,16 @@ import {
   ActivityIndicator
 } from 'react-native';
 
+import axios from 'axios'
 import ComicItem from '../components/ComicItem'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class HomeScreen extends React.Component {
   _isMounted = false;
   constructor(props) {
     super()
     this.state = {
       comics: [],
-      loading: false
+      loading: true
     }
     this.handleClick = this.handleClick.bind(this)
 
@@ -23,59 +25,49 @@ export default class HomeScreen extends React.Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    this.getData();
+    axios.get('http://xkcd.com/info.0.json')
+      .then(res => this.get8Comics(res.data.num))
+      .then(res => this.setState({comics:res, loading:false}))
+      console.log("see the state in componendDidMount", this.state.comics)
+}
+  
+
+  
+
+get8Comics = async(lastNumber)=> {
+  console.log("see the state function top", this.state.comics)
+
+    let data = []
+    for (let i = 0; i < 8; i++) {
+      console.log('getting comic', i + 1)
+      let comic = await axios.get(`http://xkcd.com/${lastNumber - i}/info.0.json`)
+      .then(res => res.data)
+      console.log(comic)
+      data.push(comic)
+    }
+    console.log('data length is now', data.length)
+    console.log("see the state function bottom", this.state.comics)
+   
+    return data
   }
-
-
-  getData = () => {
-    let lastComic= '';
-    let newestComic = 0;
-    // if(lastComic > lastComic -8){
-
-    // }
-    this.setState({ loading: true })
-     fetch(`https://xkcd.com/${lastComic}/info.0.json`)
-      .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          let errorMessage =
-            '${response.status(${response.statusText})',
-            error = new Error(errorMessage);
-          throw (error);
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log("This is json log", data);
-        if (this._isMounted) {
-          this.setState({
-            comics: data,
-            loading: false
-          })
-          newestComic = data.num
-          console.log("last comic num iss:", newestComic)
-        }
-
-      });
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+  
   handleClick(id) {
   }
 
   render() {
-    const comicItems = this.state.loading ? <ActivityIndicator size="large" color="#00ff00" /> : <ComicItem item={this.state.comics} handleClick={this.handleClick} />
+    const comicItems =this.state.loading ? <ActivityIndicator size="large" color="#00ff00"/> : this.state.comics.map(item => <ComicItem key={item.num} item={item} />)
 
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
+        <View style={styles.welcomeContainer}>
             <Image source={require('../assets/images/xkcd_logo.png')} style={styles.welcomeImage} />
           </View>
-          {comicItems}
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          
+          <TouchableOpacity  onPress={() => this.props.navigation.navigate('Links')}>
+            {comicItems}
+          </TouchableOpacity>
+          
         </ScrollView>
       </View>
     );
@@ -84,8 +76,8 @@ export default class HomeScreen extends React.Component {
 
 HomeScreen.navigationOptions = {
   header: null,
+  
 };
-
 
 
 const styles = StyleSheet.create({
@@ -99,7 +91,7 @@ const styles = StyleSheet.create({
   welcomeContainer: {
     alignItems: 'center',
     marginTop: 10,
-    marginBottom: 20,
+    paddingTop:20
   },
   welcomeImage: {
     width: 100,
