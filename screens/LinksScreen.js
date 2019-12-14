@@ -1,17 +1,30 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
+import { StyleSheet, View, Text, Image } from 'react-native';
+import FullScreenImage from "../components/FullScreenImage"
 
 export default function LinksScreen() {
   return (
     <View>
-      
+      <Image></Image>
     </View>
   );
 }
 
 LinksScreen.navigationOptions = {
-  title: 'Links',
+  headerShown:true,
+  headerTitle:'xkcd',
+  headerLeft:null,
+  headerTitleStyle:{
+    textAlign:'center',
+  },
+  headerStyle:{
+    textAlign:'center'
+  },
+  tabBarVisible:false,
+  headerTitleStyle:{
+   fontSize:40,
+   textAlign:'center'
+ },
 };
 
 const styles = StyleSheet.create({

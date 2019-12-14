@@ -16,9 +16,7 @@ const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
     navigationOptions:()=>{
-      return {
-        tabBarVisible:false,
-      };
+     tabBarVisible = false
    }
   },
   config
@@ -26,7 +24,7 @@ const HomeStack = createStackNavigator(
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: 'Comics',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -49,7 +47,7 @@ const LinksStack = createStackNavigator(
 );
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+  tabBarLabel: 'Image',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
   ),
