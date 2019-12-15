@@ -5,6 +5,7 @@ import {
   View,
   ActivityIndicator,
   Button,
+  RefreshControl
 
 } from 'react-native';
 
@@ -18,7 +19,9 @@ class HomeScreen extends React.Component {
     super()
     this.state = {
       comics: [],
-      loading: true
+      loading: true,
+      refreshing: false,
+
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -51,11 +54,26 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate('About')
   }
 
+
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.componentDidMount().then(() => {
+      this.setState({ refreshing: false });
+    });
+  }
+
   render() {
     const comicItems = this.state.loading ? <ActivityIndicator size="large" color="#00ff00" /> : this.state.comics.map(item => <ComicItem key={item.num} item={item} handleClick={this.handleClick} />);
-
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh}
+          />
+        }
+      >
         <View contentContainerStyle={styles.contentContainer}>
           {/* <Text onPress={() => this.props.navigation.navigate('About')}>TESTST</Text> */}
           {comicItems}
@@ -72,6 +90,8 @@ HomeScreen.navigationOptions = {
     alignSelf: 'center',
     fontSize: 35,
     fontFamily: 'monospace',
+    fontWeight: 'bold'
+
   },
   // headerRight: () => (
   //   <Button
@@ -88,7 +108,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    backgroundColor:'#E6E6EA'
+    backgroundColor: '#E6E6EA'
   },
   contentContainer: {
     paddingTop: 30,

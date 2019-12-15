@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, Linking, Button } from 'react-native';
 import { SingleImage } from 'react-native-zoom-lightbox';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class ImageScreen extends React.Component {
 
@@ -30,12 +31,19 @@ export default class ImageScreen extends React.Component {
         <SingleImage
           uri={this.props.navigation.state.params.img}
           style={{ width: 350, height: 350, resizeMode: 'contain' }} />
+        <Text style={styles.published}>Published: {this.props.navigation.state.params.year}.{this.props.navigation.state.params.month}.{this.props.navigation.state.params.day}</Text>
 
-        <Image
-          style={styles.logo}
-          source={require('../assets/images/xkcd_logo.png')}
-        />
-  <Text>Published: {this.props.navigation.state.params.year}.{this.props.navigation.state.params.month}</Text>
+
+        <View style={styles.footer}>
+          <Text style={{}}>A webcomic of romance, sarcasm, math, and language.</Text>
+          <TouchableOpacity onPress={() => { Linking.openURL('https://google.com') }}>
+            <Image
+              style={styles.logo}
+              source={require('../assets/images/xkcd_logo.png')}
+            />
+          </TouchableOpacity>
+        </View>
+
       </View>
     );
   }
@@ -44,6 +52,7 @@ export default class ImageScreen extends React.Component {
 ImageScreen.navigationOptions = {
   headerTitle: 'XKCD',
   headerTitleStyle: {
+    fontWeight:'bold',
     textAlign: 'center',
     flexGrow: 1,
     alignSelf: 'center',
@@ -68,10 +77,19 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     resizeMode: 'contain',
-    bottom:0, 
-    position:'absolute'
+
   },
   title: {
-    fontSize: 40
+    fontSize: 40,
+    textAlign: 'center',
+    marginTop: 20,
+    fontWeight:'bold'
+  },
+  published: {
+  },
+  footer: {
+    bottom: 0,
+    position: 'absolute',
+    alignItems:'center'
   }
 });
