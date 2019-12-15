@@ -6,15 +6,15 @@ function ComicItem(props) {
     console.log("))))))))))))))", props.item.img)
 
     return (
-        <TouchableOpacity onPress={() => props.handleClick(props.item.img)}>
-        <View key={props.item.num} style={styles.container}>
-            <Text style={styles.title}>{props.item.title}</Text>
+        <TouchableOpacity onPress={() => props.handleClick(props.item)}>
+            <View key={props.item.num} style={styles.container}>
+                <Text style={styles.title}>{props.item.title}</Text>
                 <Image
                     style={styles.image}
                     source={{ uri: props.item.img }}
                     key={props.item.num}
                 />
-        </View >
+            </View >
         </TouchableOpacity>
     )
 }
@@ -29,9 +29,9 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         borderWidth: 1,
         borderRadius: 7,
-        marginHorizontal: 15,
-        marginVertical: 15
-
+        marginHorizontal:40,
+        marginVertical: 15,
+        backgroundColor:'white'
     },
     title: {
         fontSize: 20,

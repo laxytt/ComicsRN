@@ -1,8 +1,9 @@
-import { Platform } from 'react-native';
+import { Platform, Button } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import ImageScreen from '../screens/ImageScreen';
+import AboutScreen from '../screens/AboutScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -12,9 +13,7 @@ const config = Platform.select({
       labelStyle: {
         fontSize: 12,
       },
-      style: {
-        backgroundColor: 'blue',
-      },
+     
     }
   },
 });
@@ -22,7 +21,8 @@ const config = Platform.select({
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Image:ImageScreen,
+    Image: ImageScreen,
+    About: AboutScreen,
   },
   config
 
@@ -30,13 +30,13 @@ const HomeStack = createStackNavigator(
 
 HomeStack.navigationOptions = {
   tabBarVisible:false,
-  title:"XKCD",
+  title: "XKCD",
   headerTitleStyle: {
     textAlign: 'center',
     backgroundColor: 'red',
-    flexGrow:1,
-    alignSelf:'center',
-},
+    flexGrow: 1,
+    alignSelf: 'center',
+  },
 };
 
 HomeStack.path = '';
@@ -49,18 +49,30 @@ const ImageStack = createStackNavigator(
 );
 
 ImageStack.navigationOptions = {
-  tabBarVisible:false
+  tabBarVisible: false
 };
 
 ImageStack.path = '';
 
+const AboutStack = createStackNavigator(
+  {
+    About: AboutScreen,
+  },
+  config
+);
 
+AboutStack.navigationOptions = {
+  tabBarVisible: false,
+};
+
+AboutStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   ImageStack,
+  AboutStack,
 
-},);
+});
 
 tabNavigator.path = '';
 

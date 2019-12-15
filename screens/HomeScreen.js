@@ -4,13 +4,15 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
-  
+  Button,
+
 } from 'react-native';
 
 import axios from 'axios'
 import ComicItem from '../components/ComicItem'
+import { withNavigation } from 'react-navigation';
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   _isMounted = false;
   constructor(props) {
     super()
@@ -18,7 +20,7 @@ export default class HomeScreen extends React.Component {
       comics: [],
       loading: true
     }
-    this.handleClick = this.handleClick.bind(this)
+    this.handleClick = this.handleClick.bind(this);
   }
 
   async componentDidMount() {
@@ -42,22 +44,26 @@ export default class HomeScreen extends React.Component {
   }
 
   handleClick(img) {
-    this.props.navigation.push('Image',img)
+    this.props.navigation.push('Image', img)
+  }
+
+  handleAboutLink = () => {
+    this.props.navigation.navigate('About')
   }
 
   render() {
-    const comicItems = this.state.loading ? <ActivityIndicator size="large" color="#00ff00" /> : this.state.comics.map(item => <ComicItem key={item.num} item={item} handleClick={this.handleClick}/>);
+    const comicItems = this.state.loading ? <ActivityIndicator size="large" color="#00ff00" /> : this.state.comics.map(item => <ComicItem key={item.num} item={item} handleClick={this.handleClick} />);
 
     return (
       <ScrollView style={styles.container}>
-        <View  contentContainerStyle={styles.contentContainer}>
+        <View contentContainerStyle={styles.contentContainer}>
+          {/* <Text onPress={() => this.props.navigation.navigate('About')}>TESTST</Text> */}
           {comicItems}
         </View>
       </ScrollView>
     );
   }
 }
-
 HomeScreen.navigationOptions = {
   headerTitle: 'XKCD',
   headerTitleStyle: {
@@ -65,7 +71,16 @@ HomeScreen.navigationOptions = {
     flexGrow: 1,
     alignSelf: 'center',
     fontSize: 35,
+    fontFamily: 'monospace',
   },
+  // headerRight: () => (
+  //   <Button
+  //     onPress={() => this.props.navigation.push('About')}
+  //     title="About"
+  //     color="black"
+  //   />
+  // ),
+
 
 };
 
@@ -73,6 +88,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    backgroundColor:'#E6E6EA'
   },
   contentContainer: {
     paddingTop: 30,
@@ -92,7 +108,8 @@ const styles = StyleSheet.create({
     marginTop: 3
   },
   headerStyle: {
-    textAlign: 'center'
+    textAlign: 'center',
   }
 
 });
+export default withNavigation(HomeScreen)

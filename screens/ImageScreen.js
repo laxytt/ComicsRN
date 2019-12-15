@@ -1,12 +1,15 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, Button } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
+import { SingleImage } from 'react-native-zoom-lightbox';
 
 export default class ImageScreen extends React.Component {
+
   constructor(props) {
     super()
     this.state = {
       isRotated: false
     }
+    console.log(props)
 
   }
   handleRotate() {
@@ -15,13 +18,24 @@ export default class ImageScreen extends React.Component {
 
   render() {
     return (
+
       <View style={styles.container} >
-        <Text></Text>
+        {/* <Text></Text>
         <Image
           style={styles.image}
-          source={{ uri: this.props.navigation.state.params }}
+          source={{ uri: this.props.navigation.state.params.img }}
+        /> */}
+
+        <Text style={styles.title}>{this.props.navigation.state.params.title}</Text>
+        <SingleImage
+          uri={this.props.navigation.state.params.img}
+          style={{ width: 350, height: 350, resizeMode: 'contain' }} />
+
+        <Image
+          style={styles.logo}
+          source={require('../assets/images/xkcd_logo.png')}
         />
-        
+  <Text>Published: {this.props.navigation.state.params.year}.{this.props.navigation.state.params.month}</Text>
       </View>
     );
   }
@@ -41,13 +55,23 @@ ImageScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: 'white'
   },
   image: {
-    width: 100 + '%',
-    height: 100 + '%',
+    width: 350,
+    height: 350,
+    resizeMode: 'contain'
+  },
+  logo: {
+    width: 80,
+    height: 80,
     resizeMode: 'contain',
+    bottom:0, 
+    position:'absolute'
+  },
+  title: {
+    fontSize: 40
   }
 });
