@@ -19,7 +19,6 @@ export default class HomeScreen extends React.Component {
       loading: true
     }
     this.handleClick = this.handleClick.bind(this)
-
   }
 
   async componentDidMount() {
@@ -39,25 +38,18 @@ export default class HomeScreen extends React.Component {
       console.log(comic)
       data.push(comic)
     }
-    console.log('data length is now', data.length)
     return data
   }
 
   handleClick(img) {
-    this.props.navigation.push('Links',img)
-    console.log(" IMG IN HANDLE CLICK", img)
+    this.props.navigation.push('Image',img)
   }
-
 
   render() {
     const comicItems = this.state.loading ? <ActivityIndicator size="large" color="#00ff00" /> : this.state.comics.map(item => <ComicItem key={item.num} item={item} handleClick={this.handleClick}/>);
 
     return (
       <ScrollView style={styles.container}>
-        {/* <View style={styles.welcomeContainer}>
-          <Image source={require('../assets/images/xkcd_logo.png')} style={styles.welcomeImage} />
-        </View> */}
-
         <View  contentContainerStyle={styles.contentContainer}>
           {comicItems}
         </View>
@@ -76,7 +68,6 @@ HomeScreen.navigationOptions = {
   },
 
 };
-
 
 const styles = StyleSheet.create({
   container: {

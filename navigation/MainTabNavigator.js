@@ -1,9 +1,8 @@
-import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import ImageScreen from '../screens/ImageScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -23,7 +22,7 @@ const config = Platform.select({
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Links:LinksScreen,
+    Image:ImageScreen,
   },
   config
 
@@ -42,24 +41,24 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = '';
 
-const LinksStack = createStackNavigator(
+const ImageStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Image: ImageScreen,
   },
   config
 );
 
-LinksStack.navigationOptions = {
+ImageStack.navigationOptions = {
   tabBarVisible:false
 };
 
-LinksStack.path = '';
+ImageStack.path = '';
 
 
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  LinksStack,
+  ImageStack,
 
 },);
 
