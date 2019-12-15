@@ -9,7 +9,9 @@ export default class ImageScreen extends React.Component {
     super()
     this.state = {
       isRotated: false,
-      screenWidth: Dimensions.get("window").width
+      screenWidth: Dimensions.get("window").width,
+      screenHeight: Dimensions.get('screen').height
+
     }
     console.log(this.state.screenWidth)
 
@@ -22,24 +24,26 @@ export default class ImageScreen extends React.Component {
     return (
 
       <View style={styles.container} >
+        <Image style={{ width: this.state.screenWidth, height: 500, position: 'absolute', top: -50, resizeMode: 'cover' }} source={require('../assets/images/background.jpg')} />
+
         <Text style={styles.title}>{this.props.navigation.state.params.title}</Text>
         <SingleImage
           uri={this.props.navigation.state.params.img}
           // style={styles.image} />
           style={[{ width: this.state.screenWidth }, styles.image]} />
         <View style={{ backgroundColor: 'white' }}>
-          <Text style={styles.description}>{this.props.navigation.state.params.alt}</Text>
           <Text style={styles.published}>Published: {this.props.navigation.state.params.year}.{this.props.navigation.state.params.month}.{this.props.navigation.state.params.day}</Text>
+          <Text style={styles.description}>{this.props.navigation.state.params.alt}</Text>
         </View>
 
 
         <View style={styles.footer}>
-          <Text style={styles.description}>A webcomic of romance, sarcasm, math, and language.</Text>
           <TouchableOpacity onPress={() => { Linking.openURL('https://google.com') }}>
             <Image
-              style={[{ width: this.state.screenWidth },styles.logo]}
+              style={[{ width: this.state.screenWidth }, styles.logo]}
               source={require('../assets/images/xkcd_logo.png')}
             />
+            <Text style={{ textAlign: 'center' }}>A webcomic of romance, sarcasm, math, and language.</Text>
           </TouchableOpacity>
         </View>
 
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
   },
   logo: {
-    height: 70,
+    height: 50,
     resizeMode: 'stretch',
     bottom: 0,
     alignItems: "center",
@@ -96,7 +100,9 @@ const styles = StyleSheet.create({
     marginTop: 0,
     textAlign: 'left',
     fontWeight: 'bold',
-    borderTopWidth: StyleSheet.hairlineWidth
+    marginTop: 5,
+
+    // borderTopWidth: StyleSheet.hairlineWidth
 
   },
   footer: {
@@ -107,6 +113,6 @@ const styles = StyleSheet.create({
   published: {
     textAlign: 'left',
     paddingHorizontal: 5,
-
+    fontSize: 12
   }
 });

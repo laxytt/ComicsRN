@@ -5,7 +5,9 @@ import {
   View,
   ActivityIndicator,
   Button,
-  RefreshControl
+  RefreshControl,
+  Image,
+  Dimensions
 
 } from 'react-native';
 
@@ -21,6 +23,8 @@ class HomeScreen extends React.Component {
       comics: [],
       loading: true,
       refreshing: false,
+      screenWidth: Dimensions.get("screen").width,
+      screenHeight: Dimensions.get('screen').height
 
     }
     this.handleClick = this.handleClick.bind(this);
@@ -65,20 +69,24 @@ class HomeScreen extends React.Component {
   render() {
     const comicItems = this.state.loading ? <ActivityIndicator size="large" color="#00ff00" /> : this.state.comics.map(item => <ComicItem key={item.num} item={item} handleClick={this.handleClick} />);
     return (
-      <ScrollView
-        style={styles.container}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh}
-          />
-        }
-      >
-        <View contentContainerStyle={styles.contentContainer}>
-          {/* <Text onPress={() => this.props.navigation.navigate('About')}>TESTST</Text> */}
-          {comicItems}
-        </View>
-      </ScrollView>
+      <View style={styles.container}>
+        <Image style={{ width: this.state.screenWidth, height: this.state.screenHeight + 10, position: 'absolute', top: -50, resizeMode: 'cover' }} source={require('../assets/images/background.jpg')} />
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh}
+            />
+          }
+        >
+          <View contentContainerStyle={styles.contentContainer}>
+
+            {/* <Text onPress={() => this.props.navigation.navigate('About')}>TESTST</Text> */}
+            {comicItems}
+          </View>
+        </ScrollView>
+      </View>
+
     );
   }
 }
@@ -108,7 +116,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    backgroundColor: '#E6E6EA'
+    backgroundColor: '#E6E6EA',
   },
   contentContainer: {
     paddingTop: 30,
