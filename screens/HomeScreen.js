@@ -1,16 +1,15 @@
 import React from 'react';
 import {
-  Image,
-  Platform,
   ScrollView,
   StyleSheet,
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  
 } from 'react-native';
 
 import axios from 'axios'
 import ComicItem from '../components/ComicItem'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 export default class HomeScreen extends React.Component {
   _isMounted = false;
   constructor(props) {
@@ -28,14 +27,9 @@ export default class HomeScreen extends React.Component {
     axios.get('http://xkcd.com/info.0.json')
       .then(res => this.get8Comics(res.data.num))
       .then(res => this.setState({ comics: res, loading: false }))
-    console.log("see the state in componendDidMount", this.state.comics)
   }
 
-
-
-
   get8Comics = async (lastNumber) => {
-    console.log("see the state function top", this.state.comics)
 
     let data = []
     for (let i = 0; i < 8; i++) {
@@ -46,50 +40,41 @@ export default class HomeScreen extends React.Component {
       data.push(comic)
     }
     console.log('data length is now', data.length)
-    console.log("see the state function bottom", this.state.comics)
-
     return data
   }
 
-  handleClick(id) {
-    console.log("Clicked: ", id)
+  handleClick(img) {
+    this.props.navigation.push('Links',img)
+    console.log(" IMG IN HANDLE CLICK", img)
   }
 
+
   render() {
-    const comicItems = this.state.loading ? <ActivityIndicator size="large" color="#00ff00" /> : this.state.comics.map(item => <ComicItem key={item.num} item={item} handleClick={this.handleClick} />)
+    const comicItems = this.state.loading ? <ActivityIndicator size="large" color="#00ff00" /> : this.state.comics.map(item => <ComicItem key={item.num} item={item} handleClick={this.handleClick}/>);
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         {/* <View style={styles.welcomeContainer}>
           <Image source={require('../assets/images/xkcd_logo.png')} style={styles.welcomeImage} />
         </View> */}
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-          
-            {comicItems}
-      
-
-        </ScrollView>
-      </View>
+        <View  contentContainerStyle={styles.contentContainer}>
+          {comicItems}
+        </View>
+      </ScrollView>
     );
   }
 }
 
 HomeScreen.navigationOptions = {
-  headerShown:true,
-  headerTitle:'XKCD',
-  headerLeft:null,
-  headerTitleStyle:{
-    textAlign:'center',
+  headerTitle: 'XKCD',
+  headerTitleStyle: {
+    textAlign: 'center',
+    flexGrow: 1,
+    alignSelf: 'center',
+    fontSize: 35,
   },
-  headerStyle:{
-    textAlign:'center'
-  },
-  tabBarVisible:false,
-  headerTitleStyle:{
-   fontSize:40,
-   textAlign:'center'
- }
+
 };
 
 
@@ -106,7 +91,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     paddingTop: 20,
     borderBottomWidth: 0.8,
-    borderBottomColor:'gray'
+    borderBottomColor: 'gray'
 
   },
   welcomeImage: {
@@ -115,8 +100,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginTop: 3
   },
-  headerStyle:{
-    textAlign:'center'
+  headerStyle: {
+    textAlign: 'center'
   }
 
 });

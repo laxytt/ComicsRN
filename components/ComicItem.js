@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-
-
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 
 function ComicItem(props) {
+    console.log("))))))))))))))", props.item.img)
+
     return (
-        <TouchableOpacity onPress={() => props.handleClick(props.item.num)}>
-            <View style={styles.container}>
-                <Text style={styles.title}>{props.item.title}</Text>
+        <TouchableOpacity onPress={() => props.handleClick(props.item.img)}>
+        <View key={props.item.num} style={styles.container}>
+            <Text style={styles.title}>{props.item.title}</Text>
                 <Image
                     style={styles.image}
                     source={{ uri: props.item.img }}
                     key={props.item.num}
                 />
-            </View >
+        </View >
         </TouchableOpacity>
     )
 }
@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
         width: 80 + '%',
         height: 150,
         resizeMode: 'contain',
-        marginVertical: 10
+        marginVertical: 10,
     }
 })

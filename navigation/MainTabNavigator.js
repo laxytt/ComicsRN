@@ -2,39 +2,42 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-
-import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
-  default: {},
+  default: {
+    tabBarOptions: {
+      activeTintColor: '#e91e63',
+      labelStyle: {
+        fontSize: 12,
+      },
+      style: {
+        backgroundColor: 'blue',
+      },
+    }
+  },
 });
 
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
-    navigationOptions:()=>{
-     tabBarVisible = false
-   }
+    Links:LinksScreen,
   },
   config
-  
+
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Comics',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
-  ),
+  tabBarVisible:false,
+  title:"XKCD",
+  headerTitleStyle: {
+    textAlign: 'center',
+    backgroundColor: 'red',
+    flexGrow:1,
+    alignSelf:'center',
+},
 };
 
 HomeStack.path = '';
@@ -47,10 +50,7 @@ const LinksStack = createStackNavigator(
 );
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Image',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-  ),
+  tabBarVisible:false
 };
 
 LinksStack.path = '';
@@ -60,8 +60,8 @@ LinksStack.path = '';
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   LinksStack,
-  
-});
+
+},);
 
 tabNavigator.path = '';
 
