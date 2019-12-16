@@ -1,52 +1,32 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, Linking, Button, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Image, Linking, Dimensions } from 'react-native';
 import { SingleImage } from 'react-native-zoom-lightbox';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class ImageScreen extends React.Component {
-
   constructor(props) {
     super()
     this.state = {
-      isRotated: false,
       screenWidth: Dimensions.get("window").width,
-      screenHeight: Dimensions.get('screen').height
-
     }
-    console.log(this.state.screenWidth)
-
-  }
-  handleRotate() {
-    this.setState({ isRotated: true })
   }
 
   render() {
     return (
-
       <View style={styles.container} >
-        <Image style={{ width: this.state.screenWidth, height: 500, position: 'absolute', top: -50, resizeMode: 'cover' }} source={require('../assets/images/background.jpg')} />
-
+        <Image style={{ width: this.state.screenWidth, height: 200, position: 'absolute', top: -50, resizeMode: 'stretch' }} source={require('../assets/images/background.jpg')} />
         <Text style={styles.title}>{this.props.navigation.state.params.title}</Text>
-        <SingleImage
-          uri={this.props.navigation.state.params.img}
-          // style={styles.image} />
-          style={[{ width: this.state.screenWidth }, styles.image]} />
+        <SingleImage uri={this.props.navigation.state.params.img} style={[{ width: this.state.screenWidth }, styles.image]} />
         <View style={{ backgroundColor: 'white' }}>
           <Text style={styles.published}>Published: {this.props.navigation.state.params.year}.{this.props.navigation.state.params.month}.{this.props.navigation.state.params.day}</Text>
           <Text style={styles.description}>{this.props.navigation.state.params.alt}</Text>
         </View>
-
-
         <View style={styles.footer}>
           <TouchableOpacity onPress={() => { Linking.openURL('https://google.com') }}>
-            <Image
-              style={[{ width: this.state.screenWidth }, styles.logo]}
-              source={require('../assets/images/xkcd_logo.png')}
-            />
+            <Image style={[{ width: this.state.screenWidth }, styles.logo]} source={require('../assets/images/xkcd_logo.png')} />
             <Text style={{ textAlign: 'center' }}>A webcomic of romance, sarcasm, math, and language.</Text>
           </TouchableOpacity>
         </View>
-
       </View>
     );
   }
@@ -68,10 +48,9 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     width: 100 + '%',
     height: 100 + '%',
-    // alignItems:'center'
   },
   title: {
     fontSize: 40,
@@ -83,7 +62,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flexDirection: 'row',
-    height: 450,
+    height: 300,
     marginTop: 0,
     resizeMode: 'stretch',
   },
@@ -101,9 +80,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontWeight: 'bold',
     marginTop: 5,
-
-    // borderTopWidth: StyleSheet.hairlineWidth
-
   },
   footer: {
     bottom: 0,

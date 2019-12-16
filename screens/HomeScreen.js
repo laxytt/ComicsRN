@@ -1,22 +1,9 @@
 import React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  ActivityIndicator,
-  Button,
-  RefreshControl,
-  Image,
-  Dimensions
-
-} from 'react-native';
-
+import { ScrollView, StyleSheet, View, ActivityIndicator, RefreshControl, Image, Dimensions } from 'react-native';
 import axios from 'axios'
 import ComicItem from '../components/ComicItem'
-import { withNavigation } from 'react-navigation';
 
 class HomeScreen extends React.Component {
-  _isMounted = false;
   constructor(props) {
     super()
     this.state = {
@@ -25,20 +12,17 @@ class HomeScreen extends React.Component {
       refreshing: false,
       screenWidth: Dimensions.get("screen").width,
       screenHeight: Dimensions.get('screen').height
-
     }
     this.handleClick = this.handleClick.bind(this);
   }
 
   async componentDidMount() {
-    this._isMounted = true;
     axios.get('http://xkcd.com/info.0.json')
       .then(res => this.get8Comics(res.data.num))
       .then(res => this.setState({ comics: res, loading: false }))
   }
 
   get8Comics = async (lastNumber) => {
-
     let data = []
     for (let i = 0; i < 8; i++) {
       console.log('getting comic', i + 1)
@@ -54,11 +38,6 @@ class HomeScreen extends React.Component {
     this.props.navigation.push('Image', img)
   }
 
-  handleAboutLink = () => {
-    this.props.navigation.navigate('About')
-  }
-
-
   _onRefresh = () => {
     this.setState({ refreshing: true });
     this.componentDidMount().then(() => {
@@ -70,26 +49,20 @@ class HomeScreen extends React.Component {
     const comicItems = this.state.loading ? <ActivityIndicator size="large" color="#00ff00" /> : this.state.comics.map(item => <ComicItem key={item.num} item={item} handleClick={this.handleClick} />);
     return (
       <View style={styles.container}>
-        <Image style={{ width: this.state.screenWidth, height: this.state.screenHeight + 10, position: 'absolute', top: -50, resizeMode: 'cover' }} source={require('../assets/images/background.jpg')} />
+        <Image style={{ width: this.state.screenWidth, height: this.state.screenHeight, position: 'absolute', resizeMode: 'cover' }} source={require('../assets/images/background.jpg')} />
         <ScrollView
           refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh}
-            />
-          }
-        >
+            <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh} />
+          }>
           <View contentContainerStyle={styles.contentContainer}>
-
-            {/* <Text onPress={() => this.props.navigation.navigate('About')}>TESTST</Text> */}
             {comicItems}
           </View>
         </ScrollView>
       </View>
-
     );
   }
 }
+
 HomeScreen.navigationOptions = {
   headerTitle: 'XKCD',
   headerTitleStyle: {
@@ -99,17 +72,7 @@ HomeScreen.navigationOptions = {
     fontSize: 35,
     fontFamily: 'monospace',
     fontWeight: 'bold'
-
   },
-  // headerRight: () => (
-  //   <Button
-  //     onPress={() => this.props.navigation.push('About')}
-  //     title="About"
-  //     color="black"
-  //   />
-  // ),
-
-
 };
 
 const styles = StyleSheet.create({
@@ -127,7 +90,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     borderBottomWidth: 0.8,
     borderBottomColor: 'gray'
-
   },
   welcomeImage: {
     width: 100,
@@ -138,6 +100,6 @@ const styles = StyleSheet.create({
   headerStyle: {
     textAlign: 'center',
   }
-
 });
-export default withNavigation(HomeScreen)
+
+export default HomeScreen

@@ -1,4 +1,4 @@
-import { Platform, Button } from 'react-native';
+import { Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from '../screens/HomeScreen';
@@ -13,7 +13,6 @@ const config = Platform.select({
       labelStyle: {
         fontSize: 12,
       },
-     
     }
   },
 });
