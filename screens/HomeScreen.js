@@ -5,7 +5,7 @@ import ComicItem from '../components/ComicItem'
 
 class HomeScreen extends React.Component {
   constructor(props) {
-    super()
+    super(props)
     this.state = {
       comics: [],
       loading: true,

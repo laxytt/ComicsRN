@@ -3,14 +3,14 @@ import { StyleSheet, View, Text } from 'react-native';
 
 export default class AboutScreen extends React.Component {
     constructor(props) {
-        super()
+        super(props)
         this.state = {}
     }
 
     render() {
         return (
             <View style={styles.container} >
-                <Text></Text>
+                <Text> </Text>
             </View>
         );
     }

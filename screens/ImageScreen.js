@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class ImageScreen extends React.Component {
   constructor(props) {
-    super()
+    super(props)
     this.state = {
       screenWidth: Dimensions.get("window").width,
     }
@@ -16,13 +16,13 @@ export default class ImageScreen extends React.Component {
       <View style={styles.container} >
         <Image style={{ width: this.state.screenWidth, height: 200, position: 'absolute', top: -50, resizeMode: 'stretch' }} source={require('../assets/images/background.jpg')} />
         <Text style={styles.title}>{this.props.navigation.state.params.title}</Text>
-        <SingleImage uri={this.props.navigation.state.params.img} style={[{ width: this.state.screenWidth }, styles.image]} />
+        <SingleImage uri={this.props.navigation.state.params.img} style={[{ width: this.state.screenWidth}, styles.image]} />
         <View style={{ backgroundColor: 'white' }}>
           <Text style={styles.published}>Published: {this.props.navigation.state.params.year}.{this.props.navigation.state.params.month}.{this.props.navigation.state.params.day}</Text>
           <Text style={styles.description}>{this.props.navigation.state.params.alt}</Text>
         </View>
         <View style={styles.footer}>
-          <TouchableOpacity onPress={() => { Linking.openURL('https://google.com') }}>
+          <TouchableOpacity onPress={() => { Linking.openURL('https://xkcd.com/about/') }}>
             <Image style={[{ width: this.state.screenWidth }, styles.logo]} source={require('../assets/images/xkcd_logo.png')} />
             <Text style={{ textAlign: 'center' }}>A webcomic of romance, sarcasm, math, and language.</Text>
           </TouchableOpacity>
@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     bottom: 0,
     alignItems: "center",
-    alignContent: 'center'
+    alignContent: 'center',
+  
 
   },
   description: {
@@ -84,7 +85,9 @@ const styles = StyleSheet.create({
   footer: {
     bottom: 0,
     position: 'absolute',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderWidth:2,
+    borderColor:'black'
   },
   published: {
     textAlign: 'left',
