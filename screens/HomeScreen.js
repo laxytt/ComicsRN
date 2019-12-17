@@ -49,7 +49,7 @@ class HomeScreen extends React.Component {
     const comicItems = this.state.loading ? <ActivityIndicator size="large" color="#00ff00" /> : this.state.comics.map(item => <ComicItem key={item.num} item={item} handleClick={this.handleClick} />);
     return (
       <View style={styles.container}>
-        <Image style={{ width: this.state.screenWidth, height: this.state.screenHeight, position: 'absolute', resizeMode: 'cover' }} source={require('../assets/images/background.jpg')} />
+        <Image style={{ ...StyleSheet.absoluteFill }} source={require('../assets/images/background.jpg')} />
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh} />
@@ -73,13 +73,16 @@ HomeScreen.navigationOptions = {
     fontFamily: 'monospace',
     fontWeight: 'bold'
   },
+  headerStyle: {
+    backgroundColor: "#96A8C8",
+    elevation:50
+  }
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    backgroundColor: '#E6E6EA',
   },
   contentContainer: {
     paddingTop: 30,

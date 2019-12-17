@@ -28,10 +28,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         borderWidth: 1,
-        borderRadius: 7,
+        borderRadius: 35,
         marginHorizontal:40,
         marginVertical: 15,
-        backgroundColor:'white'
+        backgroundColor:'white',
+        elevation:300
     },
     title: {
         fontSize: 20,

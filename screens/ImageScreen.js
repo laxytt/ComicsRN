@@ -14,17 +14,19 @@ export default class ImageScreen extends React.Component {
   render() {
     return (
       <View style={styles.container} >
-        <Image style={{ width: this.state.screenWidth, height: 200, position: 'absolute', top: -50, resizeMode: 'stretch' }} source={require('../assets/images/background.jpg')} />
+        {/* <Image style={{ width: this.state.screenWidth, height: 200, position: 'absolute', top: -50, resizeMode: 'stretch' }} source={require('../assets/images/background.jpg')} /> */}
+        <Image style={{ ...StyleSheet.absoluteFill }} source={require('../assets/images/background.jpg')} />
+
         <Text style={styles.title}>{this.props.navigation.state.params.title}</Text>
-        <SingleImage uri={this.props.navigation.state.params.img} style={[{ width: this.state.screenWidth}, styles.image]} />
-        <View style={{ backgroundColor: 'white' }}>
+        <SingleImage uri={this.props.navigation.state.params.img} style={[{ width: this.state.screenWidth }, styles.image]} />
+        <View style={{}}>
           <Text style={styles.published}>Published: {this.props.navigation.state.params.year}.{this.props.navigation.state.params.month}.{this.props.navigation.state.params.day}</Text>
           <Text style={styles.description}>{this.props.navigation.state.params.alt}</Text>
         </View>
         <View style={styles.footer}>
           <TouchableOpacity onPress={() => { Linking.openURL('https://xkcd.com/about/') }}>
-            <Image style={[{ width: this.state.screenWidth }, styles.logo]} source={require('../assets/images/xkcd_logo.png')} />
-            <Text style={{ textAlign: 'center' }}>A webcomic of romance, sarcasm, math, and language.</Text>
+            <Image style={styles.about} source={require('../assets/images/about.png')} />
+            <Text style={{ textAlign: 'center', color: 'white' }}>A webcomic of romance, sarcasm, math, and language.</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -42,6 +44,10 @@ ImageScreen.navigationOptions = {
     fontSize: 35,
     marginLeft: -30
   },
+  headerStyle: {
+    backgroundColor: "#96A8C8",
+    elevation: 50
+  }
 };
 
 const styles = StyleSheet.create({
@@ -59,35 +65,33 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderRadius: 120,
+    color: '#fff'
   },
   image: {
     flexDirection: 'row',
     height: 300,
     marginTop: 0,
-    resizeMode: 'stretch',
+    resizeMode: 'contain',
   },
-  logo: {
-    height: 50,
-    resizeMode: 'stretch',
-    bottom: 0,
-    alignItems: "center",
-    alignContent: 'center',
-  
 
-  },
   description: {
-    paddingHorizontal: 5,
+    paddingHorizontal: 20,
     marginTop: 0,
     textAlign: 'left',
     fontWeight: 'bold',
     marginTop: 5,
+    color: '#fff',
+    fontSize: 20
+
   },
   footer: {
-    bottom: 0,
-    position: 'absolute',
+    flex: 1,
     alignItems: 'center',
-    borderWidth:2,
-    borderColor:'black'
+    alignSelf: 'center',
+    justifyContent: 'flex-end'
+  },
+  about: {
+    alignSelf: 'center'
   },
   published: {
     textAlign: 'left',
