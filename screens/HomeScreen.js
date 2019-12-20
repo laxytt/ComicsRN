@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, ActivityIndicator, RefreshControl, Image, Dimensions } from 'react-native';
+import { ScrollView, StyleSheet, View, ActivityIndicator, RefreshControl, Image } from 'react-native';
 import axios from 'axios'
 import ComicItem from '../components/ComicItem'
 
@@ -10,10 +10,7 @@ class HomeScreen extends React.Component {
       comics: [],
       loading: true,
       refreshing: false,
-      screenWidth: Dimensions.get("screen").width,
-      screenHeight: Dimensions.get('screen').height
     }
-    this.handleClick = this.handleClick.bind(this);
   }
 
   async componentDidMount() {
@@ -25,16 +22,14 @@ class HomeScreen extends React.Component {
   get8Comics = async (lastNumber) => {
     let data = []
     for (let i = 0; i < 8; i++) {
-      console.log('getting comic', i + 1)
       let comic = await axios.get(`http://xkcd.com/${lastNumber - i}/info.0.json`)
         .then(res => res.data)
-      console.log(comic)
       data.push(comic)
     }
     return data
   }
 
-  handleClick(img) {
+  handleClick = (img) => {
     this.props.navigation.push('Image', img)
   }
 
@@ -46,10 +41,14 @@ class HomeScreen extends React.Component {
   }
 
   render() {
-    const comicItems = this.state.loading ? <ActivityIndicator size="large" color="#00ff00" /> : this.state.comics.map(item => <ComicItem key={item.num} item={item} handleClick={this.handleClick} />);
+    const backgroundImage = '../assets/images/background.jpg'
+    const comicItems = this.state.loading ?
+      <ActivityIndicator size="large" color="#00ff00" /> :
+      this.state.comics.map(item =>
+        <ComicItem key={item.num} item={item} handleClick={this.handleClick} />);
     return (
       <View style={styles.container}>
-        <Image style={{ ...StyleSheet.absoluteFill }} source={require('../assets/images/background.jpg')} />
+        <Image style={{ ...StyleSheet.absoluteFill }} source={require(backgroundImage)} />
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh} />
@@ -75,7 +74,6 @@ HomeScreen.navigationOptions = {
   },
   headerStyle: {
     backgroundColor: "#96A8C8",
-    elevation:50
   }
 };
 

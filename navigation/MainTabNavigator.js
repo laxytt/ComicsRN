@@ -3,7 +3,6 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import ImageScreen from '../screens/ImageScreen';
-import AboutScreen from '../screens/AboutScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -21,10 +20,8 @@ const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
     Image: ImageScreen,
-    About: AboutScreen,
   },
   config
-
 );
 
 HomeStack.navigationOptions = {
@@ -53,24 +50,10 @@ ImageStack.navigationOptions = {
 
 ImageStack.path = '';
 
-const AboutStack = createStackNavigator(
-  {
-    About: AboutScreen,
-  },
-  config
-);
-
-AboutStack.navigationOptions = {
-  tabBarVisible: false,
-};
-
-AboutStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   ImageStack,
-  AboutStack,
-
 });
 
 tabNavigator.path = '';

@@ -3,16 +3,16 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 
 function ComicItem(props) {
-    console.log("))))))))))))))", props.item.img)
-
+    const { item } = props;
+    const { num, title, img } = props.item;
     return (
-        <TouchableOpacity onPress={() => props.handleClick(props.item)}>
-            <View key={props.item.num} style={styles.container}>
-                <Text style={styles.title}>{props.item.title}</Text>
+        <TouchableOpacity onPress={() => props.handleClick(item)}>
+            <View key={num} style={styles.container}>
+                <Text style={styles.title}>{title}</Text>
                 <Image
                     style={styles.image}
-                    source={{ uri: props.item.img }}
-                    key={props.item.num}
+                    source={{ uri: img }}
+                    key={num}
                 />
             </View >
         </TouchableOpacity>
@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         borderWidth: 1,
         borderRadius: 35,
-        marginHorizontal:40,
+        marginHorizontal: 40,
         marginVertical: 15,
-        backgroundColor:'white',
-        elevation:300
+        backgroundColor: 'white',
+        elevation: 300
     },
     title: {
         fontSize: 20,

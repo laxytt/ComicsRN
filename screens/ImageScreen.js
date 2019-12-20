@@ -1,27 +1,24 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, Linking, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Image, Linking } from 'react-native';
 import { SingleImage } from 'react-native-zoom-lightbox';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class ImageScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      screenWidth: Dimensions.get("window").width,
-    }
+    this.state = {}
   }
 
   render() {
+    const { title, year, month, day, img, alt } = this.props.navigation.state.params;
     return (
       <View style={styles.container} >
-        {/* <Image style={{ width: this.state.screenWidth, height: 200, position: 'absolute', top: -50, resizeMode: 'stretch' }} source={require('../assets/images/background.jpg')} /> */}
         <Image style={{ ...StyleSheet.absoluteFill }} source={require('../assets/images/background.jpg')} />
-
-        <Text style={styles.title}>{this.props.navigation.state.params.title}</Text>
-        <SingleImage uri={this.props.navigation.state.params.img} style={[{ width: this.state.screenWidth }, styles.image]} />
+        <Text style={styles.title}>{title}</Text>
+        <SingleImage uri={img} style={styles.image} />
         <View style={{}}>
-          <Text style={styles.published}>Published: {this.props.navigation.state.params.year}.{this.props.navigation.state.params.month}.{this.props.navigation.state.params.day}</Text>
-          <Text style={styles.description}>{this.props.navigation.state.params.alt}</Text>
+          <Text style={styles.published}>Published: {year}.{month}.{day}</Text>
+          <Text style={styles.description}>{alt}</Text>
         </View>
         <View style={styles.footer}>
           <TouchableOpacity onPress={() => { Linking.openURL('https://xkcd.com/about/') }}>
@@ -51,7 +48,6 @@ ImageScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -73,7 +69,6 @@ const styles = StyleSheet.create({
     marginTop: 0,
     resizeMode: 'contain',
   },
-
   description: {
     paddingHorizontal: 20,
     marginTop: 0,
@@ -82,7 +77,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: '#fff',
     fontSize: 20
-
   },
   footer: {
     flex: 1,
@@ -96,6 +90,8 @@ const styles = StyleSheet.create({
   published: {
     textAlign: 'left',
     paddingHorizontal: 5,
-    fontSize: 12
+    fontSize: 12,
+    marginLeft: 15,
+    color: 'white'
   }
 });
